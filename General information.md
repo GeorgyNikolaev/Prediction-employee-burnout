@@ -20,6 +20,7 @@
 ### Ссылки
 - [Are Your Employees Burning Out?](https://www.kaggle.com/datasets/blurredmachine/are-your-employees-burning-out?select=test.csv)<br>
 Тут есть столбик с burnout так что это то, что нам надо, но мало характеристик о сотруднике (9 учитывая индентификатор сотрудника). <br>И еще, видимо это данные с хакатона.
+Вот несколько решений: [вот](https://github.com/hemnaresh/employee-burnout-prediction) и [вот](https://www.kaggle.com/datasets/blurredmachine/are-your-employees-burning-out?select=train.csv), даже [видос](https://www.youtube.com/watch?v=D3yyRMI_RTA) есть.
 - [Employee dataset](https://www.kaggle.com/datasets/tawfikelmetwally/employee-dataset)<br>
 Тут просто данные о сотрудниках (город, образование, пол, возраст). Целевая колонка `Leave or not`.
 - [Employee Attrition](https://www.kaggle.com/datasets/HRAnalyticRepository/employee-attrition-data)<br>
