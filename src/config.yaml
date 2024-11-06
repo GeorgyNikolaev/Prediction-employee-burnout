@@ -1,0 +1,12 @@
+name: employee-burnout-prediction
+description: Employee Burnout Prediction Model
+cmd: >
+  python3 main.py --input ${DATA} --output ${MODEL_STATE} ${OPTIM_STATE}
+env:
+  python: auto
+inputs:
+  - dataset.csv: DATA
+outputs:
+  - burnout_model_state_dict.save: MODEL_STATE
+  - burnout_optimizer_state_dict.save: OPTIM_STATE
+cloud-instance-type: g1.1

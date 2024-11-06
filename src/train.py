@@ -5,7 +5,7 @@ from burnout_classifier import BurnoutClassifier
 
 def train(model, train_loader, optimizer, criterion, device, epoch) -> BurnoutClassifier:
     model.train()
-    for batch_idx, (data, target) in enumerate(train_loader):
+    for (data, target) in enumerate(train_loader):
         data = data.to(device)
         target = target.to(device)
         optimizer.zero_grad()
@@ -13,10 +13,10 @@ def train(model, train_loader, optimizer, criterion, device, epoch) -> BurnoutCl
         loss = criterion(output, target)
         loss.backward()
         optimizer.step()
-        if batch_idx % 100 == 0:
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                epoch, batch_idx * len(data), len(train_loader.dataset),
-                100. * batch_idx / len(train_loader), loss.item()))
+    if epoch % 10 == 0:
+        print('Train Epoch: {}\tLoss: {:.6f}'.format(
+            epoch,
+            loss.item()))
     return model
 
 
