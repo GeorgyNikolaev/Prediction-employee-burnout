@@ -30,10 +30,13 @@
 ![plot](graphics/Age_HourlyRate.png)
 ![plot](graphics/Age_MounthRate.png)
 ![plot](graphics/Age_MounthIncom.png)
-![plot](graphics/Age_Overtime.png)
 
 Интересно пронаблюдать, что почасовая, дневная и полумесячная нагрузка наиболее высокая у среднего 
 поколения. Что логично, ведь у молодых мало знаний, опыта и навыком, а у старшего уже не так много сил.
+
+![plot](graphics/Age_Overtime.png)
+
+Заметим, что переработки присутствуют среди всех возрастных групп.
 
 ![plot](graphics/MonthlyIncome_DailyRate.png)
 
