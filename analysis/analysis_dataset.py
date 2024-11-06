@@ -2,10 +2,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import read_data
 import seaborn as sns
-import numpy as np
 
-
-DATASET_PATH = 'dataset.csv'
+DATASET_PATH = '../dataset.csv'
 dataset = pd.read_csv(DATASET_PATH)
 
 # Читаем только нужные нам столбцы.
