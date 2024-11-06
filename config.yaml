@@ -1,0 +1,13 @@
+name: employee-burnout-prediction
+description: Employee Burnout Prediction Model
+cmd: >
+  python3 train.py --input ${SRCS} ${DATA} --output ${MODEL_STATE} ${OPTIM_STATE}
+env:
+  python: auto
+inputs:
+  - /home/sheikh/pred_hackathon/src/*.py: SRCS
+  - /home/sheikh/pred_hackathon/dataset/dataset.csv: DATA
+outputs:
+  - model_state_dict.save: MODEL_STATE
+  - optimizer_state_dict.save: OPTIM_STATE
+cloud-instance-type: g1.1
