@@ -1,4 +1,7 @@
 import numpy as np
+import pandas as pd
+from pathlib import Path
+
 
 alf = {'Yes': 0,
        'No': 1,
@@ -29,10 +32,26 @@ alf = {'Yes': 0,
        }
 
 
-def convert_data(data):
+def convert_data(data) -> np.array:
     keys = list(alf.keys())
-    print(keys)
     for i in range(len(alf)):
         x = keys[i]
         data.replace(x, alf[x], inplace=True)
     return np.array(data)
+
+
+def read_data(path: str):
+    pd.set_option('future.no_silent_downcasting', True)
+
+    # Читаем датасет.
+    dataset = pd.read_csv(path)
+
+    # Читаем только нужные нам столбцы.
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    necessary_columns_name = [x[:-1] for x in open(f'{BASE_DIR}/analysis/necessary_columns.txt', 'r').readlines()]
+    data = dataset[necessary_columns_name].copy()
+
+    # Заменяем строки на числа.
+    data = convert_data(data) + 1
+
+    return np.array(data), necessary_columns_name
