@@ -4,14 +4,10 @@ import read_data
 import seaborn as sns
 
 DATASET_PATH = '../dataset.csv'
-dataset = pd.read_csv(DATASET_PATH)
 
-# Читаем только нужные нам столбцы.
-necessary_columns_name = [x[:-1] for x in open('necessary_columns', 'r').readlines()]
-data = dataset[necessary_columns_name]
 
 # Заменяем строки на числа.
-data_conv = read_data.convert_data(data)
+data_conv, necessary_columns_name = read_data.read_data(DATASET_PATH)
 
 
 # Для удобства визуализации используем pandas.
