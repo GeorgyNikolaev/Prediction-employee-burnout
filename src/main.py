@@ -6,19 +6,19 @@ from dataset import HRAnalysisDataset
 from burnout_classifier import BurnoutClassifier
 from torch.utils.data import DataLoader
 from tqdm import tqdm as tqdma
+import argparse
 
 
-def main():
-    dataset = HRAnalysisDataset('dataset.csv')
-    train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(dataset, [0.8, 0.1, 0.1])
-    data_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-    train_loader, val_loader, test_loader = torch.random_split(data_loader, [0.7, 0.1, 0.2])
-
+def main(dataset):
+    train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(dataset, [0.7, 0.1, 0.2])
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = BurnoutClassifier(dataset[0][0].shape[0])
+    model = BurnoutClassifier(29, hidden_size=16)
     model = model.to(device)
     criterion = nn.BCELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.05)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
     lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3)
     epochs = 32
     for epoch in tqdma(range(1, epochs + 1)):
@@ -31,4 +31,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input', required=True, type=argparse.FileType('r'))
+    args = parser.parse_args()
+    dataset = HRAnalysisDataset(args.input)
+    args.input.close()
+    main(dataset)

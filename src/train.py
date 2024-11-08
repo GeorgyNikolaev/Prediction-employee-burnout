@@ -5,7 +5,7 @@ from burnout_classifier import BurnoutClassifier
 
 def train(model, train_loader, optimizer, criterion, device, epoch) -> BurnoutClassifier:
     model.train()
-    for (data, target) in enumerate(train_loader):
+    for data, target in train_loader:
         data = data.to(device)
         target = target.to(device)
         optimizer.zero_grad()
@@ -32,11 +32,10 @@ def validate(model, val_loader, criterion, device) -> float:
             target = target.to(device)
             output = model(data)
             outputs.append(output)
-    outs = torch.tensor([pred > threshold for pred in outputs]).to(device)
-    inps = torch.tensor(inps).to(device)
+    outs = torch.tensor([pred > threshold for preds in outputs for pred in preds]).to(device)
     best_auc = metrics.auc(inps, outs)
-    for thrshold in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]:
-        outs = torch.tensor([pred > thrshold for pred in outputs]).to(device)
+    for thrshold in [0.05 * i for i in range(1, 20)]:
+        outs = torch.tensor([pred > thrshold for preds in outputs for pred in preds]).to(device)
         auc = metrics.auc(inps, outs)
         if auc > best_auc:
             best_auc = auc
@@ -48,6 +47,8 @@ def test(model, test_loader, criterion, device, threshold) -> None:
     model.eval()
     test_loss = 0
     correct = 0
+    false_positive = 0
+    false_negative = 0
     with torch.no_grad():
         for data, target in test_loader:
             data = data.to(device)
@@ -56,7 +57,11 @@ def test(model, test_loader, criterion, device, threshold) -> None:
             test_loss += criterion(output, target).item()  # sum up batch loss
             pred = int(output > threshold)
             correct += pred == int(target.item())
+            false_positive += pred == 1 and target.item() == 0
+            false_negative += pred == 0 and target.item() == 1
     test_loss /= len(test_loader.dataset)
-    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%), Precision: {}/{} ({:.0f}%), Recall: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
-        100. * correct / len(test_loader.dataset)))
+        100. * correct / len(test_loader.dataset),
+        correct / (correct + false_positive) * 100.,
+        100. * correct / (correct + false_negative)))

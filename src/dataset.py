@@ -1,11 +1,12 @@
 import torch
 from torch.utils.data import Dataset
 import pandas as pd
+import numpy as np
 
 
 def get_classes(df):
     classes = df.unique().tolist()
-    classes = {i: class_name for i, class_name in enumerate(classes)}
+    classes = {class_name: i for i, class_name in enumerate(classes)}
     return classes
 
 
@@ -26,9 +27,11 @@ class HRAnalysisDataset(Dataset):
         marital_status_classes = get_classes(self.employees_info['MaritalStatus'])
         self.employees_info['MaritalStatus'] = self.employees_info['MaritalStatus'].map(marital_status_classes)
         self.employees_info["OverTime"] = self.employees_info["OverTime"].map({"Yes": 1, "No": 0})
-        self.features = self.employees_info.drop(['Attrition', 'EmployeeNumber', "JobLevel", "YearsAtCompany", "StockOptionLevel"], axis=1).to_numpy()
+        self.features = self.employees_info.drop(['Over18', 'Attrition', 'EmployeeNumber', "JobLevel", "YearsAtCompany", "StockOptionLevel"], axis=1).to_numpy()
+        self.features = np.vstack(self.features).astype(np.float32)
         self.features = torch.tensor(self.features)
-        self.target = torch.tensor(self.employees_info['Attrition'].to_numpy())
+        self.target = self.employees_info['Attrition'].to_numpy().astype(np.float32)
+        self.target = torch.tensor(self.target)
 
     def __len__(self):
         return len(self.employees_info)
