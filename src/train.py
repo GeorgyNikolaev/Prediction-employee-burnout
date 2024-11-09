@@ -1,5 +1,5 @@
 import torch
-import torcheval.metrics.functional as metrics
+import torcheval.metrics as metrics
 from burnout_classifier import BurnoutClassifier
 
 
@@ -23,20 +23,22 @@ def train(model, train_loader, optimizer, criterion, device, epoch) -> BurnoutCl
 def validate(model, val_loader, criterion, device) -> float:
     model.eval()
     threshold = 0.5
-    inps = []
     outputs = []
     with torch.no_grad():
         for data, target in val_loader:
             data = data.to(device)
-            inps.append(data)
             target = target.to(device)
             output = model(data)
             outputs.append(output)
-    outs = torch.tensor([pred > threshold for preds in outputs for pred in preds]).to(device)
-    best_auc = metrics.auc(inps, outs)
+    outs = torch.tensor([float(pred > threshold) for preds in outputs for pred in preds]).to(device)
+    nn_outs = torch.tensor([pred for preds in outputs for pred in preds]).to(device)
+    metric = metrics.BinaryAUROC()
+    metric.update(nn_outs, outs)
+    best_auc = metric.compute().item()
     for thrshold in [0.05 * i for i in range(1, 20)]:
-        outs = torch.tensor([pred > thrshold for preds in outputs for pred in preds]).to(device)
-        auc = metrics.auc(inps, outs)
+        outs = torch.tensor([float(pred > thrshold) for preds in outputs for pred in preds]).to(device)
+        metric.update(nn_outs, outs)
+        auc = metric.compute().item()
         if auc > best_auc:
             best_auc = auc
             threshold = thrshold
@@ -49,19 +51,26 @@ def test(model, test_loader, criterion, device, threshold) -> None:
     correct = 0
     false_positive = 0
     false_negative = 0
+    targets = []
+    preds = []
     with torch.no_grad():
         for data, target in test_loader:
             data = data.to(device)
             target = target.to(device)
+            targets.append(target)
             output = model(data)
             test_loss += criterion(output, target).item()  # sum up batch loss
-            pred = int(output > threshold)
-            correct += pred == int(target.item())
-            false_positive += pred == 1 and target.item() == 0
-            false_negative += pred == 0 and target.item() == 1
+            pred = torch.tensor([float(out > threshold) for out in output]).to(device)
+            preds.append(pred)
+            correct += sum(pred[i] == int(target[i].item()) for i in range(len(pred)))
+            false_positive += sum(pred[i] == 1 and target[i].item() == 0 for i in range(len(pred)))
+            false_negative += sum(pred[i] == 0 and target[i].item() == 1 for i in range(len(pred)))
     test_loss /= len(test_loader.dataset)
-    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%), Precision: {}/{} ({:.0f}%), Recall: {}/{} ({:.0f}%)\n'.format(
-        test_loss, correct, len(test_loader.dataset),
+    print('\nTest set: Average loss: {:.4f}, Accuracy: {:.0f}%, Precision: {:.0f}%, Recall: {:.0f}%\n'.format(
+        test_loss,
         100. * correct / len(test_loader.dataset),
         correct / (correct + false_positive) * 100.,
         100. * correct / (correct + false_negative)))
+    targets = torch.cat(targets)
+    preds = torch.cat(preds)
+    print(targets, preds, sep='\n')

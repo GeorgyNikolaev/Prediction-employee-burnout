@@ -15,10 +15,10 @@ def main(dataset):
     val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = BurnoutClassifier(29, hidden_size=16)
+    model = BurnoutClassifier(input_size=dataset.features.shape[1], hidden_size=16)
     model = model.to(device)
     criterion = nn.BCELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=5e-3)
     lr_scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3)
     epochs = 32
     for epoch in tqdma(range(1, epochs + 1)):
@@ -27,7 +27,7 @@ def main(dataset):
     threshold = validate(model, val_loader, criterion, device)
     test(model, test_loader, criterion, device, threshold)
     model.save('burnout_model_state_dict.save')
-    optimizer.save('burnout_optimizer_state_dict.save')
+    torch.save(optimizer.state_dict(), 'burnout_optimizer_state_dict.save')
 
 
 if __name__ == '__main__':

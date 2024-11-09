@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 
 
@@ -18,10 +19,16 @@ class BurnoutClassifier(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        out = self.fcs(x).view(-1)
+        out = self.fcs(x).squeeze(1)
         out = self.sigmoid(out)
         return out
 
     def predict(self, x, threshold=0.5):
         out = self.forward(x)
         return (out > threshold).int()
+
+    def save(self, path):
+        torch.save(self.state_dict(), path)
+
+    def load(self, path):
+        self.load_state_dict(torch.load(path))
