@@ -1,9 +1,7 @@
 import os
-
-import matplotlib.pyplot as plt
-
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+import matplotlib.pyplot as plt
 import numpy as np
 import keras
 from keras.api import layers
@@ -27,10 +25,13 @@ data, necessary_columns_name = rd.read_data(DATASET_PATH)
 x_data = np.concatenate((data[:, :1], data[:, 2:]), axis=1)
 y_data = np.array(data[:, 1] - 1)
 for i in range(len(y_data)):
-    if y_data[i] == 0:
+    if y_data[i] == 1:
         for _ in range(5):
-            y_data = np.append(y_data, 0)
+            y_data = np.append(y_data, 1)
             x_data = np.append(x_data, x_data[i:i+1, :], axis=0)
+
+def normalizer(data):
+    return np.array(data / (np.max(data, axis=0)), dtype=float)
 
 
 y_data = np.array(y_data, dtype=float)
@@ -39,8 +40,13 @@ standard = StandardScaler()
 standard_x_data = standard.fit_transform(x_data)
 normal = Normalizer()
 normal_x_data = normal.fit_transform(standard_x_data)
+# normal_x_data = normalizer(x_data)
 
-x_train, x_test, y_train, y_test = train_test_split(normal_x_data, y_data, test_size=0.5)
+x_train, x_test, y_train, y_test = train_test_split(normal_x_data, y_data, test_size=0.2)
+y_train = np.array(y_train, dtype=float)
+y_test = np.array(y_test, dtype=float)
+x_train = np.array(x_train, dtype=float)
+x_test = np.array(x_test, dtype=float)
 
 model = keras.api.Sequential()
 model.add(layers.Dense(1024, activation='relu',))

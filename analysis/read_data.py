@@ -3,11 +3,11 @@ import pandas as pd
 from pathlib import Path
 
 
-alf = {'Yes': 0,
-       'No': 1,
-       'Travel_Rarely': 0,
-       'Travel_Frequently': 1,
-       'Non-Travel': 2,
+alf = {'Yes': 1,
+       'No': 0,
+       'Non-Travel': 0,
+       'Travel_Rarely': 1,
+       'Travel_Frequently': 2,
        'Research & Development': 0,
        'Sales': 1,
        'Human Resources': 2,
