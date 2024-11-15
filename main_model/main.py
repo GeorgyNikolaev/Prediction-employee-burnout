@@ -12,6 +12,21 @@ def normalizer(data):
     return np.array(data / (np.max(data, axis=0)), dtype=float)
 
 
+def SLON(model, employ):
+    burnout = model(employ.reshape(1, -1)).numpy().reshape(-1)[0]
+    is_burnout = True if burnout > burnout_treshhold else False
+
+    recommendations_text = recommend.recommendation(employ)
+
+    if is_burnout:
+        print('Ваш сотрудник выгорел')
+    else:
+        print('Ваш сотрудник не выгорел')
+
+    print('Вот несколько рекомендаций по улучшению состояния сотрудника')
+    print(recommendations_text)
+
+
 BASE_DIR = str(Path(__file__).resolve().parent.parent)
 DATASET_PATH = BASE_DIR + '/dataset.csv'
 BURNOUT_MODEL_PATH = BASE_DIR + '/burnout_model/model_custom_scaler.keras'
@@ -28,16 +43,7 @@ model = keras.api.models.load_model(BURNOUT_MODEL_PATH)
 
 employ = np.array(normal_x_data[np.random.randint(0, len(x_data))])
 
-burnout = model(employ.reshape(1, -1)).numpy().reshape(-1)[0]
-is_burnout = True if burnout > burnout_treshhold else False
+SLON(model=model, employ=employ)
 
-recommendations_text = recommend.recommendation(employ)
 
-if is_burnout:
-    print('Ваш сотрудник выгорел')
-else:
-    print('Ваш сотрудник не выгорел')
-
-print('Вот несколько рекомендаций по улучшению состояния сотрудника')
-print(recommendations_text)
 
