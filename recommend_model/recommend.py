@@ -1,51 +1,18 @@
 from pathlib import Path
-import shap
-import pandas as pd
-import keras
 import numpy as np
-import matplotlib.pyplot as plt
-import os
-import joblib
-import read_data
+import analysis.read_data as rd
 
-PROCESSED_DATA_PATH = 'recommend/new_dataset.csv'
-MODEL_PATH = 'first_model/first_model.keras'
-SCALER_PATH = 'recommend/scalers/standard_scaler.pkl'
-NORMALIZER_PATH = 'recommend/scalers/normalizer.pkl'
-EXPLAINER_PATH = "recommend/shap_explainer.pkl"
 
-actionable_features = [
-    'OverTime',
-    'BusinessTravel',
-    'DistanceFromHome',
-    'JobSatisfaction',
-    'WorkLifeBalance',
-    'JobInvolvement',
-    'RelationshipSatisfaction',
-    'YearsSinceLastPromotion',
-    'JobLevel',
-    'PercentSalaryHike',
-    'YearsWithCurrManager',
-    'JobRole',
-    'MonthlyRate',
-    'MonthlyIncome'
-]
+recommendations_treshold = {
+    'OverTime': 1,
+    'JobSatisfaction': 3,
+    'WorkLifeBalance': 3,
+    'DistanceFromHome': 15,
+    'JobInvolvement': 3,
+    'RelationshipSatisfaction': 3,
+    'YearsSinceLastPromotion': 3
 
-non_actionable_features = [
-    'NumCompaniesWorked',
-    'TotalWorkingYears',
-    'YearsInCurrentRole',
-    'Age',
-    'Department',
-    'Gender',
-    'MaritalStatus',
-    'EducationField',
-    'HourlyRate',
-    'YearsAtCompany',
-    'DailyRate',
-    'Education'
-]
-
+}
 predefined_recommendations = {
     'OverTime': "Рассмотрите возможность уменьшения количества сверхурочных часов. Попробуйте распределить задачи более равномерно или обсудите гибкий график работы с руководством.",
     'BusinessTravel': "Уменьшите количество деловых поездок, если это возможно. Рассмотрите возможность проведения встреч онлайн.",
@@ -63,43 +30,14 @@ predefined_recommendations = {
     'MonthlyIncome': "Рассмотрите возможности повышения дохода через дополнительные проекты или повышение квалификации."
 }
 
-def get_recommendations(employee: pd.DataFrame, actionable_features=actionable_features, top_n=3) -> pd.DataFrame:
-    # Препроцессинг данных сотрудника
-    employee_processed = read_data.convert_data(employee)
 
-    # Загрузка модели и предобработчиков
-    model = keras.models.load_model(MODEL_PATH)
-    standard_scaler = joblib.load(SCALER_PATH)
-    normalizer = joblib.load(NORMALIZER_PATH)
-    explainer = joblib.load(EXPLAINER_PATH)
-
-    # Вычисление SHAP-значений и формирование рекомендаций
-    employee_scaled = standard_scaler.transform(employee_processed)
-    employee_normalized = normalizer.transform(employee_scaled)
-    feature_names = employee.columns.tolist()
-    shap_values = explainer(employee_normalized)
-    shap_values_df = pd.DataFrame(shap_values.values, columns=feature_names)
-
-    for idx in range(len(employee)):
-        employee_shap = shap_values_df.iloc[idx]
-        employee_values = employee.iloc[idx]
-        actionable_shap = pd.Series(index=actionable_features)
-        for feature in actionable_features:
-            columns = [col for col in feature_names if col.startswith(feature)]
-            shap_sum = employee_shap[columns].sum()
-            actionable_shap[feature] = shap_sum
-        sorted_features = actionable_shap.abs().sort_values(ascending=False).index.tolist()
-        rec_list = []
-        for feature in sorted_features:
-            value = employee_values[feature]
-            recommendation = get_recommendation(feature, value)
-            if recommendation:
-                rec_list.append(recommendation)
-                if len(rec_list) == top_n:
-                    break  
-        rec_text = ' '.join(rec_list)
-        employee.at[employee.index[idx], 'recommendation'] = rec_text
-    return employee
+def recommendation(employ: np.array):
+    recommend = ''
+    for x, y in zip(employ, necessary_columns_name):
+        rec = get_recommendation(y, x)
+        if rec is not None and rec != '':
+            recommend += rec + '\n'
+    return recommend
 
 def get_recommendation(feature, value):
     # Определяет рекомендацию на основе признака и его значения
@@ -166,22 +104,19 @@ def get_recommendation(feature, value):
         return predefined_recommendations.get(feature, "")
 
 
-# Загрузка и предобработка данных
-data = pd.read_csv("../dataset.csv").drop("Attrition", axis=1)
-data = data[data["OverTime"] != "Yes"]
-print(data['OverTime'].value_counts()['No'])
-print(len(data))
-# necessary_columns_path = 'C:\\Users\\MSI\\Prediction-employee-burnout\\analysis\\necessary_columns'
 BASE_DIR = str(Path(__file__).resolve().parent.parent)
-necessary_columns_path = BASE_DIR + '/analysis/necessary_columns.txt'
-with open(necessary_columns_path, 'r') as file:
-    necessary_columns_name = [line.strip() for line in file.readlines()]
-person = data.iloc[:100]
-necessary_columns_name.remove("Attrition")
-person = person[necessary_columns_name]
-# Получение рекомендаций
-result = get_recommendations(person, top_n=3)
-# Вывод рекомендаций
-for rec in result['recommendation']:
-    print("*"*30)
-    print(rec)
+DATASET_PATH = BASE_DIR + '/dataset.csv'
+
+data, necessary_columns_name = rd.read_data(DATASET_PATH)
+necessary_columns_name.remove('Attrition')
+
+x_data = np.concatenate((data[:, :1], data[:, 2:]), axis=1)
+y_data = np.array(data[:, 1] - 1)
+
+employ = x_data[np.random.randint(0, len(x_data))]
+
+
+
+
+
+
