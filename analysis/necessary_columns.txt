@@ -9,7 +9,6 @@ EducationField
 Gender
 HourlyRate
 JobInvolvement
-JobLevel
 JobRole
 JobSatisfaction
 MaritalStatus
@@ -18,6 +17,7 @@ MonthlyRate
 NumCompaniesWorked
 OverTime
 PercentSalaryHike
+PerformanceRating
 RelationshipSatisfaction
 TotalWorkingYears
 WorkLifeBalance
