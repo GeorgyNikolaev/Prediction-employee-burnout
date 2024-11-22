@@ -39,9 +39,10 @@ def recommendation(employ: np.array):
 
 def get_recommendation(feature: str, value: int) -> str:
     if feature in recommend_standard_values:
-        print(feature + ': ' + str(value))
+        # print(feature + ': ' + str(value))
         standard_value = recommend_standard_values[feature]
-        if not standard_value[0] < value < standard_value[1]:
+        # print(standard_value[0], standard_value[1])
+        if not (standard_value[0] < value < standard_value[1]):
             return predefined_recommendations[feature]
         else:
             return ''

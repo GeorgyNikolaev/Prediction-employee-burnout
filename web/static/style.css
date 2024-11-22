@@ -1,0 +1,84 @@
+body {
+    font-family: 'Arial', sans-serif; /* Задали шрифт */
+    background-color: #f2f2f2;
+    background-image: linear-gradient(to bottom right, #f2f2f2, #e0e0e0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    background-color: white;
+    padding: 30px; /* Увеличили отступ */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Усилили тень */
+    text-align: center;
+    max-width: 800px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333; /* Темно-серый цвет заголовка */
+  }
+  
+  .question {
+    margin-bottom: 20px;
+    padding: 15px; /* Отступ внутри вопроса */
+    border: 1px solid #ddd; /* Тонкая серая рамка вокруг каждого вопроса */
+    border-radius: 5px; /* Скругленные углы */
+    background-color: #f9f9f9; /* Светло-серый фон */
+  }
+  
+  .question p {
+    font-weight: bold; /* Жирный шрифт для вопроса */
+    margin-bottom: 10px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .options {
+    display: flex;
+    /* justify-content: space-around; */
+    flex-wrap: wrap;
+  }
+  
+  .options input {
+    margin-right: 5px;
+  }
+  
+  .options label {
+    margin: 0 20px 0 0;
+    display: inline-block;
+    font-size: 1em; /* Размер шрифта меток */
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px; /* Увеличили отступы */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto; /* Увеличили отступ от низа */
+    font-size: 1.1em; /* Увеличили размер шрифта кнопки */
+  }
+  
+  #result {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+  }
+
+  #result p {
+    white-space: pre-wrap;
+    text-align: left;
+  }
