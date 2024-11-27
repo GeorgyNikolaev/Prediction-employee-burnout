@@ -5,7 +5,7 @@ import json
 
 BASE_DIR = str(Path(__file__).resolve().parent.parent)
 
-with open(BASE_DIR + '\\recommend_model\\recommendations_text.json', 'r', encoding='utf-8') as file:
+with open(BASE_DIR + '/recommend_model/recommendations_text.json', 'r', encoding='utf-8') as file:
     recommendations_text = json.load(file)
 # print(recommendations_text)
 
