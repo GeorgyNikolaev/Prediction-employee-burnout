@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, jsonify
+from gevent.pywsgi import WSGIServer
 import importlib.util
 import os
 import sys
 import json
 import numpy as np
+
+port = 5000
 
 # Расчёт пути к родительской директории
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,4 +80,5 @@ def process_answers(answers):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    http_server = WSGIServer(('', port), app)
+    http_server.serve_forever()

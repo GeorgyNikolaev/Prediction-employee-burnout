@@ -83,11 +83,11 @@ checkpoint = ModelCheckpoint(
     mode="max"
 )
 
-model.fit(x_train, y_train,
-          epochs=epochs,
-          batch_size=batch_size,
-          validation_split=0.15,
-          callbacks=[checkpoint, early_stopping])
+# model.fit(x_train, y_train,
+#           epochs=epochs,
+#           batch_size=batch_size,
+#           validation_split=0.15,
+#           callbacks=[checkpoint, early_stopping])
 
 model = keras.api.models.load_model(model_name)
 predict = model.predict(x_test)
