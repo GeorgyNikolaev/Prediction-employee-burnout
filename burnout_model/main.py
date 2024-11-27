@@ -15,10 +15,10 @@ import analysis.read_data as rd
 learning_rate = 0.0001
 batch_size = 1
 epochs = 100
-treshold = 0.5
+threshold = 0.5
 
 DATASET_PATH = '../dataset.csv'
-model_name = 'model_custom_scaler.keras'
+model_name = 'model_custom_scaler_with_f1-score.keras'
 
 data, necessary_columns_name = rd.read_data(DATASET_PATH)
 
@@ -47,8 +47,10 @@ y_data = np.array(y_data, dtype=float)
 normal_x_data = normalizer(x_data)
 
 x_train, x_test, y_train, y_test = train_test_split(normal_x_data, y_data, test_size=0.2)
-y_train = np.array(y_train, dtype=float)
-y_test = np.array(y_test, dtype=float)
+
+y_train = np.array(y_train, dtype=float).reshape((-1, 1))
+y_test = np.array(y_test, dtype=float).reshape((-1, 1))
+
 x_train = np.array(x_train, dtype=float)
 x_test = np.array(x_test, dtype=float)
 
@@ -65,7 +67,7 @@ model.add(layers.Dense(1, activation='sigmoid'))
 
 model.compile(optimizer=keras.api.optimizers.Adam(learning_rate=learning_rate),
               loss=keras.api.losses.binary_crossentropy,
-              metrics=['accuracy'])
+              metrics=['accuracy', 'f1_score'])
 
 # Определяем коллбэки
 early_stopping = EarlyStopping(
@@ -84,21 +86,26 @@ checkpoint = ModelCheckpoint(
 model.fit(x_train, y_train,
           epochs=epochs,
           batch_size=batch_size,
-          validation_split=0.07,
+          validation_split=0.15,
           callbacks=[checkpoint, early_stopping])
 
 model = keras.api.models.load_model(model_name)
-predict = model.predict(x_test).reshape((-1))
-y_predict = [1 if x > treshold else 0 for x in predict]
+predict = model.predict(x_test)
+y_predict = np.array([1 if x > threshold else 0 for x in predict], dtype=float)
 
-accuracy = accuracy_score(y_predict, y_test)
-print(accuracy)
+accuracy = accuracy_score(y_test, y_predict)
+print('accuracy: ' + str(accuracy))
 
-plt.scatter([x for x in range(len(y_test))], y_predict, c='r')
+f1_score = keras.api.metrics.F1Score(threshold=threshold)
+f1_score.update_state(y_test, predict)
+print('f1-score: ' + str(*f1_score.result().numpy()))
+
+plt.scatter([x for x in range(len(y_test))], predict, c='r')
 plt.scatter([x for x in range(len(y_test))], y_test, c='b', s=1)
 plt.show()
 
 plt.scatter([x for x in range(len(y_test))], sorted(predict))
+# plt.scatter([x for x in range(len(y_test))], predict)
 plt.show()
 
 

@@ -1,7 +1,6 @@
 Age
 Attrition
 BusinessTravel
-DailyRate
 Department
 DistanceFromHome
 Education
@@ -13,10 +12,8 @@ JobRole
 JobSatisfaction
 MaritalStatus
 MonthlyIncome
-MonthlyRate
 NumCompaniesWorked
 OverTime
-PercentSalaryHike
 PerformanceRating
 RelationshipSatisfaction
 TotalWorkingYears

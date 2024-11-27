@@ -1,9 +1,9 @@
-BusinessTravel 0 3
-DistanceFromHome 0 8
-JobInvolvement 3 100
-JobSatisfaction 3 100
-MonthlyIncome 4000 1000000
-OverTime 0 2
-RelationshipSatisfaction 3 100
-WorkLifeBalance 3 100
-YearsSinceLastPromotion 0 6
+BusinessTravel 3 2 1
+DistanceFromHome 1000 18 8
+JobInvolvement 2 3 4
+JobSatisfaction 2 3 4
+MonthlyIncome 0 2000 3200
+OverTime 2 1 1
+RelationshipSatisfaction 2 3 4
+WorkLifeBalance 2 3 4
+YearsSinceLastPromotion 1000 7 5

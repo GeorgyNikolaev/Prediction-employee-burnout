@@ -1,32 +1,30 @@
 from pathlib import Path
 import numpy as np
 import analysis.read_data as rd
+import json
 
 BASE_DIR = str(Path(__file__).resolve().parent.parent)
 
-predefined_recommendations = {
-    'OverTime': "Рассмотрите возможность уменьшения количества сверхурочных часов. Попробуйте распределить задачи более равномерно или обсудите гибкий график работы с руководством.",
-    'BusinessTravel': "Уменьшите количество деловых поездок, если это возможно. Рассмотрите возможность проведения встреч онлайн.",
-    'DistanceFromHome': "Если возможно, рассмотрите возможность удалённой работы или гибкого графика, чтобы сократить время на дорогу до работы.",
-    'JobSatisfaction': "Обсудите с руководством возможности повышения удовлетворённости работой, такие как улучшение условий труда или предоставление возможностей для профессионального роста.",
-    'WorkLifeBalance': "Старайтесь поддерживать баланс между работой и личной жизнью. Рассмотрите возможность гибкого графика или удалённой работы.",
-    'JobInvolvement': "Участвуйте в проектах и инициативах компании, чтобы повысить вовлечённость в работу.",
-    'RelationshipSatisfaction': "Работайте над улучшением отношений с коллегами и руководством через командные мероприятия и открытое общение.",
-    'YearsSinceLastPromotion': "Обсудите возможности карьерного роста и продвижения с руководством.",
-    'MonthlyIncome': "Рассмотрите возможности повышения дохода через дополнительные проекты или повышение квалификации."
-}
+with open(BASE_DIR + '\\recommend_model\\recommendations_text.json', 'r', encoding='utf-8') as file:
+    recommendations_text = json.load(file)
+# print(recommendations_text)
 
 def load_recommend_standard_values():
     recommend_columns_name = open(BASE_DIR + '/recommend_model/recommend_columns', 'r').readlines()
     recommend_standard_values = {}
     for i in range(len(recommend_columns_name)):
-        name, left, right = map(str, recommend_columns_name[i].split(' '))
+        name, left, middle, right = map(str, recommend_columns_name[i].split(' '))
         left = int(left)
+        middle = int(middle)
         right = int(right)
-        recommend_standard_values[name] = [left, right]
+        standard_values = dict()
+        standard_values['critical'] = [left, middle]
+        standard_values['non_critical'] = [middle, right]
+        recommend_standard_values[name] = standard_values
     return recommend_standard_values
 
 recommend_standard_values = load_recommend_standard_values()
+# print(recommend_standard_values)
 
 def recommendation(employ: np.array):
     recommend = ''
@@ -40,14 +38,26 @@ def recommendation(employ: np.array):
 def get_recommendation(feature: str, value: int) -> str:
     if feature in recommend_standard_values:
         # print(feature + ': ' + str(value))
-        standard_value = recommend_standard_values[feature]
-        # print(standard_value[0], standard_value[1])
-        if not (standard_value[0] < value < standard_value[1]):
-            return predefined_recommendations[feature]
+        value_critical = recommend_standard_values[feature]['critical']
+        value_non_critical = recommend_standard_values[feature]['non_critical']
+        # print(value_critical, value_non_critical)
+
+        if isBetween(value=value, arr=value_critical):
+            return recommendations_text[feature]['critical']
+
+        elif isBetween(value=value, arr=value_non_critical):
+            return recommendations_text[feature]['non_critical']
+
         else:
             return ''
     return ''
 
+
+def isBetween(value: int, arr: list) -> bool:
+    if arr[0] <= value < arr[1] or arr[1] < value <= arr[0]:
+        return True
+    else:
+        return False
 
 
 DATASET_PATH = BASE_DIR + '/dataset.csv'
