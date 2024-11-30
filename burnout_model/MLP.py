@@ -15,7 +15,7 @@ import analysis.read_data as rd
 learning_rate = 0.0001
 batch_size = 1
 epochs = 100
-threshold = 0.5
+threshold = 0.95
 
 DATASET_PATH = '../dataset.csv'
 model_name = 'model_custom_scaler_with_f1-score.keras'
@@ -102,10 +102,10 @@ print('f1-score: ' + str(*f1_score.result().numpy()))
 
 plt.scatter([x for x in range(len(y_test))], predict, c='r')
 plt.scatter([x for x in range(len(y_test))], y_test, c='b', s=1)
-plt.show()
+# plt.show()
 
 plt.scatter([x for x in range(len(y_test))], sorted(predict))
 # plt.scatter([x for x in range(len(y_test))], predict)
-plt.show()
+# plt.show()
 
 
