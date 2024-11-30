@@ -40,10 +40,10 @@ def SLON(employ, isTest: bool=False, y_true: int=0):
     elif burnout_low_treshhold < burnout < burnout_up_treshhold:
         results += 'Ваше состояние можно оценить как нормальное.\n\n'
     else:
-        results += 'Ура, у вас высокий уровень душевного равновесия.\n\n'
+        results += 'Ура, у вас низкая вероятность выгореть.\n\n'
 
     if recommendations_text != "":
-        results += ('Дальше, вне зависимости от вашего состояния мы предложим вам ряд мер по улучшению'
+        results += ('Дальше, вне зависимости от вашего состояния мы предложим вам ряд мер по улучшению '
                     'вашего состояния:\n\n')
         for line in recommendations_text[:-1].split('\n'):
             if line != "":

@@ -47,7 +47,6 @@ x_test = np.array(x_test, dtype=float)
 # Создание объекта DMatrix для XGBoost
 dtrain = xgb.DMatrix(data=x_train, label=y_train)
 dtest = xgb.DMatrix(data=x_test, label=y_test)
-print(dtest)
 
 # Задание параметров модели
 params = {
@@ -72,12 +71,12 @@ f1_score.update_state(y_test, np.array(y_pred).reshape((-1, 1)))
 print('f1-score: ' + str(*f1_score.result().numpy()))
 
 
-explainer = shap.Explainer(model)
-shap_values = explainer(x_test)
-
-# Построение графика
-shap.summary_plot(shap_values, x_test, feature_names=necessary_columns_name)
-shap.summary_plot(shap_values, x_test, feature_names=necessary_columns_name, plot_type="bar")
+# explainer = shap.Explainer(model)
+# shap_values = explainer(x_test)
+#
+# # Построение графика
+# shap.summary_plot(shap_values, x_test, feature_names=necessary_columns_name)
+# shap.summary_plot(shap_values, x_test, feature_names=necessary_columns_name, plot_type="bar")
 
 
 
