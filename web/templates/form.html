@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<title>SLON</title>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900|PT+Sans&display=swap&subset=cyrillic" rel="stylesheet">
+<link rel="stylesheet" href="../static/assets/css/slick.css?">
+<link rel="stylesheet" href="../static/assets/css/aos.css?">
+<link rel="stylesheet" href="../static/assets/css/style.css?">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" type="image/png" href="../static/img/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="../static/img/favicon/favicon.svg" />
+<link rel="shortcut icon" href="../static/img/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="../static/img/favicon/site.webmanifest" />
+
+<!--<link rel="stylesheet" href="../static/style.css">-->
+</head>
+<body>
+  <div class="container">
+    <div class="form">
+        <div class="header__inner header__form">
+               <a class="header__logo" href="{{ url_for('index') }}" data-scroll="#intro">
+                   <img src="../static/img/favicon/favicon.svg" alt="SLON">
+                   <span class="header__form header__logo-text">SLON</span>
+               </a>
+
+
+                <nav class="nav" id="nav">
+                    <a class="nav__link nav__link__form" href="{{ url_for('index') }}">На главную страницу</a>
+
+                </nav>
+            </div>
+      <form id="survey-form" action="/submit" method="post">
+        <!-- <div class="question">
+          <p>Вопрос 1:</p>
+          <div class="options">
+            <input type="radio" name="q1" value="a" id="q1a"> <label for="q1a">Вариант А</label>
+            <input type="radio" name="q1" value="b" id="q1b"> <label for="q1b">Вариант Б</label>
+            <input type="radio" name="q1" value="c" id="q1c"> <label for="q1c">Вариант В</label>
+            <input type="radio" name="q1" value="d" id="q1d"> <label for="q1d">Вариант Г</label>
+          </div>
+        </div> -->
+        <!-- Повторите блок <div class="question"> для вопросов 2, 3 и 4 -->
+        <button class="btn btn--orange" type="submit">Получить оценку</button>
+      </form>
+      <div id="result">
+          <h2>Тут будет результат</h2>
+      </div>
+    </div>
+  </div>
+  <script src="../static/assets/js/script_for_form.js"></script>
+  <script src="../static/assets/js/app.js"></script>
+</body>
+</html>

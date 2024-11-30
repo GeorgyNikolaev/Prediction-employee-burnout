@@ -30,6 +30,15 @@ app.static_folder = 'static'
 def index():
     return render_template('index.html')
 
+@app.route('/form')
+def form():
+    return render_template('form.html')
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+
+
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.form
@@ -73,12 +82,13 @@ def process_answers(answers):
     index_for_conv2RU = [7, 12]
     for i in index_for_conv2RU:
         answers[i] = round(answers[i] / 18)
-    print(answers)
+    # print(answers)
     result = SLON.SLON(answers)
     # print(result)\
     return result
 
 
 if __name__ == '__main__':
-    http_server = WSGIServer(('', port), app)
-    http_server.serve_forever()
+    app.run(host='0.0.0.0', debug=True)
+    # http_server = WSGIServer(('', port), app)
+    # http_server.serve_forever()

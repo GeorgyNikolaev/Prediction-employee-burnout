@@ -1,33 +1,539 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-<title>SLON</title>
-  <link rel="stylesheet" href="../static/style.css">
-  <link rel="icon" type="image/png" href="../static/img/favicon/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="../static/img/favicon/favicon.svg" />
-  <link rel="shortcut icon" href="../static/img/favicon/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/apple-touch-icon.png" />
-  <link rel="manifest" href="../static/img/favicon/site.webmanifest" />
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900|PT+Sans&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="../static/assets/css/slick.css?">
+    <link rel="stylesheet" href="../static/assets/css/aos.css?">
+    <link rel="stylesheet" href="../static/assets/css/style.css?">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--    <link rel="apple-touch-icon" sizes="180x180" href="../static/assets/images/favicons/apple-touch-icon.png">-->
+<!--    <link rel="icon" type="image/png" sizes="32x32" href="../static/assets/images/favicons/favicon-32x32.png">-->
+<!--    <link rel="icon" type="image/png" sizes="16x16" href="../static/assets/images/favicons/favicon-16x16.png">-->
+<!--    <link rel="manifest" href="../static/assets/images/favicons/manifest.json">-->
+<!--    <link rel="mask-icon" href="../static/assets/images/favicons/safari-pinned-tab.svg" color="#004AF2">-->
+<!--    <meta name="msapplication-TileColor" content="#004AF2">-->
+<!--    <meta name="theme-color" content="#004AF2">-->
+    <link rel="icon" type="image/png" href="../static/img/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../static/img/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../static/img/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="../static/img/favicon/site.webmanifest" />
+
+    <title>SLON</title>
 </head>
 <body>
-  <div class="container">
-    <h1>SLON</h1>
-    <form id="survey-form" action="/submit" method="post">
-      <!-- <div class="question">
-        <p>Вопрос 1:</p>
-        <div class="options">
-          <input type="radio" name="q1" value="a" id="q1a"> <label for="q1a">Вариант А</label>
-          <input type="radio" name="q1" value="b" id="q1b"> <label for="q1b">Вариант Б</label>
-          <input type="radio" name="q1" value="c" id="q1c"> <label for="q1c">Вариант В</label>
-          <input type="radio" name="q1" value="d" id="q1d"> <label for="q1d">Вариант Г</label>
+<div class="page">
+
+    <header class="header" id="header">
+        <div class="container">
+           <div class="header__inner">
+               <a class="header__logo" href="#" data-scroll="#intro">
+                   <img src="../static/img/favicon/favicon.svg" alt="SLON">
+                   <span class="header__logo-text">SLON</span>
+               </a>
+
+
+                <nav class="nav" id="nav">
+                    <a class="nav__link" href="#" data-scroll="#services">Услуги</a>
+                    <a class="nav__link" href="#" data-scroll="#clients">Клиенты</a>
+                    <a class="nav__link" href="#" data-scroll="#benefits">Преимущества</a>
+                    <a class="nav__link" href="#" data-scroll="#team">Команда</a>
+                    <a class="nav__link" href="#" data-scroll="#mission">Задача</a>
+                    <a class="nav__link" href="#" data-scroll="#news">Прочее</a>
+                    <a class="nav__link" href="#" data-modal="#becomeCliendModal">Свяжитесь с нами</a>
+                    <a class="nav__link" href="{{ url_for('form') }}">Пройти тест</a>
+
+                </nav>
+
+                <button class="burger" type="button" id="navToggal">
+                    <span class="burger__line">1</span>
+                    <span class="burger__line">2</span>
+                    <span class="burger__line">3</span>
+                    <span class="burger__line">4</span>
+                </button>
+            </div>
         </div>
-      </div> -->
-      <!-- Повторите блок <div class="question"> для вопросов 2, 3 и 4 -->
-      <button type="submit">Отправить</button>
-    </form>
-    <div id="result">
+    </header>
+
+    <div class="intro" id="intro">
+       <div class="intro__slider" id="introSlider">
+              <div class="slider-item">
+                    <img class="intro__slider-photo" src="../static/assets/images/slider/2.jpg" alt="">
+              </div>
+              <div class="slider-item">
+                    <img class="intro__slider-photo" src="../static/assets/images/slider/1.jpg" alt="">
+              </div>
+              <div class="slider-item">
+                    <img class="intro__slider-photo" src="../static/assets/images/slider/3.jpg" alt="">
+              </div>
+<!--              <div class="slider-item">-->
+<!--                    <img class="intro__slider-photo" src="../static/assets/images/slider/slide-4.jpg" alt="">-->
+<!--              </div>-->
+       </div>
+        <div class="container">
+             <div class="intro__inner">
+                 <div class="request-form request-form--intro" data-aos="fade-right">
+                     <div class="request-form__header">
+                         <h3 class="request-form__title">Давайте сотрудничать</h3>
+                         <div class="request-form__text">Оставьте контакты и мы свяжемся с вами</div>
+                     </div>
+                     <div class="request-content">
+                         <form action="/web/static" method="post">
+                             <div class="form__group">
+                                 <input type="text" class="input input--user" placeholder="Имя">
+                             </div>
+                             <div class="form__group">
+                                 <input type="tel" class="input input--tel" placeholder="Телефон">
+                             </div>
+                             <div class="form__group">
+                                 <input type="email" class="input input--email" placeholder="Почта">
+                             </div>
+
+                             <button class="btn btn--orange btn--block" type="button">
+                                 <span>Связаться</span>
+                             </button>
+                         </form>
+                     </div>
+                 </div>
+                 <div class="intro__text" data-aos="fade-left">
+<!--                     <div class="intro_countries">USA, Europe, Asia</div>-->
+                     <h1 class="intro__title">
+<!--                         <span class="intro__title-amp">-->
+<!--                             &amp;-->
+<!--                         </span>-->
+                         Забота о вашем благополучии начинается здесь
+                     </h1>
+                 </div>
+                 <div class="intro__slider-arrows">
+                     <button class="intro__slider-btn intro__slider-prev" id="introSliderPrev" type="button">Prev</button>
+                     <button class="intro__slider-btn intro__slider-next" id="introSliderNext" type="button">Next</button>
+                 </div>
+             </div>
+        </div>
     </div>
-  </div>
-  <script src="../static/script.js"></script>
+
+    <!-- Services -->
+    <section class="section" id="services" data-scrollspy="#services">
+        <div class="container">
+            <div class="services">
+               <h2 class="services__main-title">Услуги</h2>
+                <div class="services__item" data-aos="fade-down">
+                    <h4 class="services__title">Оценка уровня выгорания</h4>
+                    <div class="services__text">
+                        <p>Пройдя научно обоснованную анкету, вы определите уровень риска выгорания.</p>
+                    </div>
+                    <div class="services__footer">
+                        <a class="services__link" href="#">Читать больше</a>
+                    </div>
+                </div>
+                <div class="services__item" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="services__title">Персональные рекомендации</h4>
+                    <div class="services__text">
+                        <p>Получите индивидуальные советы по улучшению состояния вашего сотрудника.</p>
+                    </div>
+                    <div class="services__footer">
+                        <a class="services__link" href="#">Читать больше</a>
+                    </div>
+                </div>
+
+                <div class="services__item" data-aos="fade-down" data-aos-delay="200">
+                    <h4 class="services__title">Профилактика и поддержка</h4>
+                    <div class="services__text">
+                        <p>Инструменты для создания гармоничного баланса между работой и личной жизнью. Узнайте, как снизить напряжение и повысить продуктивность.</p>
+                    </div>
+                    <div class="services__footer">
+                        <a class="services__link" href="#">Читать больше</a>
+                    </div>
+                </div>
+
+                <div class="services__item" data-aos="fade-up" data-aos-delay="300">
+                    <h4 class="services__title">Путь к гармонии</h4>
+                    <div class="services__text">
+                        <p>Мы стремимся помочь вам не только справляться с выгоранием, но и находить новые ресурсы для роста и счастья.</p>
+                    </div>
+                    <div class="services__footer">
+                        <a class="services__link" href="#">Читать больше</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section  section--map" id="clients" data-scrollspy="#clients">
+        <div class="container">
+            <h2 class="section__title"><span>Наши </span>клиенты</h2>
+
+            <div class="clients">
+                <div class="clients__logos">
+                    <ul class="clients__list">
+                        <li data-aos="fade-in" data-aos-delay="100" data-aos-anchor=".clients">
+                            <a href="#" target="_blank">
+                                <img class="clients__list-logo img" src="../static/assets/images/clients/MEPHI.png" alt="">
+                            </a>
+                        </li>
+                        <li data-aos="fade-in" data-aos-delay="200" data-aos-anchor=".clients">
+                            <a href="#" target="_blank">
+                                <img class="clients__list-logo img" src="../static/assets/images/clients/rosatom.png" alt="">
+                            </a>
+                        </li>
+<!--                        <li data-aos="fade-in" data-aos-delay="100" data-aos-anchor=".clients">-->
+<!--                            <a href="#" target="_blank">-->
+<!--                                <img class="clients__list-logo img" src="../static/assets/images/clients/amara.svg" alt="">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li data-aos="fade-in" data-aos-delay="150" data-aos-anchor=".clients">-->
+<!--                            <a href="#" target="_blank">-->
+<!--                                <img class="clients__list-logo img" src="../static/assets/images/clients/muzica-2.svg" alt="">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li data-aos="fade-in" data-aos-delay="200" data-aos-anchor=".clients">-->
+<!--                            <a href="#" target="_blank">-->
+<!--                                <img class="clients__list-logo img" src="../static/assets/images/clients/solaytic.svg" alt="">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li data-aos="fade-in" data-aos-delay="250" data-aos-anchor=".clients">-->
+<!--                            <a href="#" target="_blank">-->
+<!--                                <img class="clients__list-logo img" src="../static/assets/images/clients/hexa.svg" alt="">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li data-aos="fade-in" data-aos-delay="300" data-aos-anchor=".clients">-->
+<!--                            <a href="#" target="_blank">-->
+<!--                                <img class="clients__list-logo img" src="../static/assets/images/clients/utosia-2.svg" alt="">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li data-aos="fade-in" data-aos-delay="350" data-aos-anchor=".clients">-->
+<!--                            <a href="#" target="_blank">-->
+<!--                                <img class="clients__list-logo img" src="../static/assets/images/clients/fox-hub.svg" alt="">-->
+<!--                            </a>-->
+<!--                        </li>-->
+                    </ul>
+                </div>
+                <div class="clients__reviews">
+                    <div class="reviews" id="reviewsSlider">
+                        <div class="reviews__item">
+                            <div class="reviews__header">
+                                <img class="reviews__photo" src="https://via.placeholder.com/100" alt="">
+                                <div class="reviews__header-main">
+                                    <div class="reviews__name">Иванов Иван</div>
+                                    <div class="reviews__company">Сотрудник МИФИ</div>
+                                </div>
+                            </div>
+                            <div class="reviews__content">
+                                С помощью этого сервиса мы смогли провести диагностику состояния сотрудников и выявить скрытые признаки выгорания. Персонализированные рекомендации помогли улучшить эмоциональный климат в коллективе и повысить продуктивность. Это инвестиция в здоровье и эффективность нашей команды!</p>
+                            </div>
+                        </div>
+                        <div class="reviews__item">
+                            <div class="reviews__header">
+                                <img class="reviews__photo" src="https://via.placeholder.com/100" alt="">
+                                <div class="reviews__header-main">
+                                    <div class="reviews__name">Иванов Иван</div>
+                                    <div class="reviews__company">Сотрудник МИФИ</div>
+                                </div>
+                            </div>
+                            <div class="reviews__content">
+                                С помощью этого сервиса мы смогли провести диагностику состояния сотрудников и выявить скрытые признаки выгорания. Персонализированные рекомендации помогли улучшить эмоциональный климат в коллективе и повысить продуктивность. Это инвестиция в здоровье и эффективность нашей команды!</p>
+                            </div>
+                        </div>
+<!--                        <div class="reviews__item">-->
+<!--                            <div class="reviews__header">-->
+<!--                                <img class="reviews__photo" src="https://via.placeholder.com/100" alt="">-->
+<!--                                <div class="reviews__header-main">-->
+<!--                                    <div class="reviews__name">John Smith</div>-->
+<!--                                    <div class="reviews__company">FOX Hub CEO</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="reviews__content">-->
+<!--                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos unde ea magni laborum sint, esse quasi accusamus, similique rem sunt accusantium nobis in voluptatibus. Iste consequuntur est illum consectetur aut.</p>-->
+<!--                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos unde ea magni laborum sint, esse quasi accusamus, similique rem sunt accusantium nobis in voluptatibus. Iste consequuntur est illum consectetur aut.</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn--orange btn--shadow" href="#" type="button" data-modal="#becomeCliendModal">
+                <span>Стать клиентом</span>
+            </button>
+            <span class="clients-love">мы любим наших клиентов</span>
+        </div>
+    </section>
+
+    <div class="section" id="benefits" data-scrollspy="#benefits">
+        <div class="container">
+           <div class="section__title"><h2><span>Наши</span> преимущества</h2></div>
+            <div class="benefits">
+                <div class="benefits__col">
+                    <ul class="benefits-list">
+                        <li class="benefits-list__item" data-aos="fade-in" data-aos-anchor=".benefits">
+                            <h4 class="benefits-ist__title">Глубокий анализ выгорания</h4>
+                            <div class="benefits-list__text">
+                                <p>Наши инструменты обеспечивают детальное понимание состояния ваших сотрудников, помогая предотвратить выгорание.</p>
+                            </div>
+                        </li>
+                        <li class="benefits-list__item" data-aos="fade-in" data-aos-delay="100" data-aos-anchor=".benefits">
+                            <h4 class="benefits-ist__title">Персонализированные рекомендации</h4>
+                            <div class="benefits-list__text">
+                                <p>Каждый сотрудник получает индивидуальные советы для улучшения своего эмоционального состояния.</p>
+                            </div>
+                        </li>
+                        <li class="benefits-list__item" data-aos="fade-in" data-aos-delay="200" data-aos-anchor=".benefits">
+                            <h4 class="benefits-ist__title">Удобный онлайн-доступ</h4>
+                            <div class="benefits-list__text">
+                                <p>Наш сайт доступен для сотрудников в любое время и из любого места, что делает процесс анализа простым и удобным./p>
+                            </div>
+                        </li>
+                        <li class="benefits-list__item" data-aos="fade-in" data-aos-delay="300" data-aos-anchor=".benefits">
+                            <h4 class="benefits-ist__title">Простота использования</h4>
+                            <div class="benefits-list__text">
+                                <p>Легкий в использовании интерфейс для вашего удобства.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="benefits__col benefits_right__col">
+                    <img src="../static/assets/images/benefits-photo.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section section--gray" id="team" data-scrollspy="#team">
+        <div class="container">
+            <h2 class="section__title"><span>Наша</span> команда</h2>
+
+            <div class="team">
+                <div class="team__col">
+                    <div class="team__item" data-aos="fade-in">
+                        <img src="../static/assets/images/team/George.JPG" alt="" class="img team__photo">
+                        <div class="team__name">Николаев Георгий</div>
+                        <div class="team__prof">Тимлид, Ml-инженер, Аналитик</div>
+                        <ul class="team__contacts">
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/mail-black-icon.svg" alt="">
+                               <a href="mailto:nikolaevgeorge574@gmail.com"> nikolaevgeorge574@gmail.com</a>
+                            </li>
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/phone-black-icon.svg" alt="">
+                               <a href="tel:+79156551282">+7 915-655-12-82</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="team__col">
+                    <div class="team__item" data-aos="fade-in" data-aos-delay="100">
+                        <img src="../static/assets/images/team/Aleksey.png" alt="" class="img team__photo">
+                        <div class="team__name">Шремзер Алексей</div>
+                        <div class="team__prof">Разработчик API, ML-инженер</div>
+                        <ul class="team__contacts">
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/mail-black-icon.svg" alt="">
+                               <a href="mailto:pisdabol@gmail.com"> pisdabol@gmail.com</a>
+                            </li>
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/phone-black-icon.svg" alt="">
+                               <a href="tel:+78944673738">закрыт</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="team__col" data-aos="fade-in" data-aos-delay="200">
+                    <div class="team__item">
+                        <img src="../static/assets/images/team/team-3.jpg" alt="" class="img team__photo">
+                        <div class="team__name">Козлова Алина</div>
+                        <div class="team__prof">Аналитик</div>
+                        <ul class="team__contacts">
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/mail-black-icon.svg" alt="">
+                               <a href="mailto:alina@gmail.com"> alina@gmail.com</a>
+                            </li>
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/phone-black-icon.svg" alt="">
+                               <a href="tel:+78944673738">закрыт</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="team__col" data-aos="fade-in" data-aos-delay="300">
+                    <div class="team__item">
+                        <img src="../static/assets/images/team/team-3.jpg" alt="" class="img team__photo">
+                        <div class="team__name">Долгов Владимир</div>
+                        <div class="team__prof">ML-инженер</div>
+                        <ul class="team__contacts">
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/mail-black-icon.svg" alt="">
+                               <a href="mailto:vova@gmail.com"> vova@gmail.com</a>
+                            </li>
+                            <li>
+                               <img class="team__contacts-icons" src="../static/assets/images/phone-black-icon.svg" alt="">
+                               <a href="tel:+78944673738">закрыт</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section" id="mission" data-scrollspy="#mission">
+        <div class="container">
+           <h2 class="mission-title">Наша цель</h2>
+            <div class="mission" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+                <h3 class="mission__title">Предоставлять нашим клиентам квалифицированные услуги в соответствии с их ожиданиями.</h3>
+                <h4 class="mission__subtitle">Инвестируйте в здоровье команды — мы поможем избежать выгорания и повысить эффективность!</h4>
+            </div>
+
+            <div class="text__center">
+                <button class="btn btn--orange btn--shadow" type="button" data-modal="#becomeCliendModal">
+                    <span>Стать клиентом</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section section--last" id="news" data-scrollspy="#news">
+        <div class="container">
+            <h2 class="section__title"><span>Интересно</span> для ознакомления</h2>
+
+            <div class="article">
+                <article class="article__item"  data-aos="fade-in">
+                    <h4 class="article__title">
+                        <a href="#">Где нас найти?</a>
+                    </h4>
+                    <div class="article__text">Тут должны быть ссылочки</div>
+                    <time class="article__date" datetime="2022-09-13 19:00">04 Декабря, 2024</time>
+                </article>
+                <article class="article__item" data-aos="fade-in" data-aos-delay="100">
+                    <h4 class="article__title">
+                        <a href="#">Где найти наш проект?</a>
+                    </h4>
+                    <div class="article__text">вот <a href="https://github.com/GeorgyNikolaev/Prediction-employee-burnout">тут</a></div>
+                    <time class="article__date" datetime="2022-09-13 19:00">04 Декабря, 2024</time>
+                </article>
+            </div>
+
+            <a class="btn btn--orange btn--shadow" href="{{ url_for('blog') }}">
+                <span>Наш блог</span>
+            </a>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container">
+            <a class="header__logo black" href="#" data-scroll="#intro">
+               <img src="../static/img/favicon.png" alt="CenterLogistic">
+               <span class="header__logo-text">SLON</span>
+            </a>
+            <address class="footer__contacts">
+                <p>г. Москва, ул. Москворечье, д2 к1</p>
+                <p>
+                    Позвоните нам: <a href="tel:9156551282">+7 915-655-12-82</a> или напишите на почту <a href="mailto:nikolaevgeorge574@gmail.com">nikolaevgeorge574@gmail.com</a>
+                </p>
+            </address>
+
+<!--            <nav class="footer__nav">-->
+<!--                <a href="text.html">Terms &amp; Contidions</a>-->
+<!--                <a href="text2.html">Privacy Policy</a>-->
+<!--                <a href="blog.html">Наш блог</a>-->
+<!--            </nav>-->
+
+        </div>
+    </footer>
+
+
+</div>
+
+    <!-- Modals -->
+    <div class="modal" id="becomeCliendModal">
+        <div class="modal__inner">
+         <div class="modal__content">
+
+           <div class="modal__header">
+                <h4 class="modal__title">Хотите позаботиться о своих сотрудниках?</h4>
+                <div class="moda__text">
+                    <p>Заполните небольшую форму, и мы вам перезвоним!</p>
+                </div>
+            </div>
+
+            <form action="/web/static" method="post">
+                 <div class="form__group">
+                     <input type="text" class="input input--dark input--user" placeholder="Имя">
+                 </div>
+                 <div class="form__group">
+                     <input type="tel" class="input input--dark input--tel" placeholder="Телефон">
+                 </div>
+                 <div class="form__group">
+                     <input type="email" class="input input--dark input--email" placeholder="Почта">
+                 </div>
+
+                 <button class="btn btn--orange btn--block" type="button">
+                     <span>Отправить</span>
+                 </button>
+             </form>
+
+<!--             <div class="modal__footer">-->
+<!--                 <h4 class="modal__footer-title">Our contacts</h4>-->
+<!--                 <address class="modal__contacts">-->
+<!--                     <p>New York, Street, ZIP code</p>-->
+<!--                    <p>-->
+<!--                    Phone: <a href="tel:98437822">+8445342234</a></p>-->
+<!--                    <p>E-mail<a href="mailto:goshalox@gmail.com">goshalox@gmail.com</a>-->
+<!--                    </p>-->
+<!--                 </address>-->
+<!--             </div>-->
+
+             <button class="modal__close" type="button" data-modal-close>
+                 <img src="../static/assets/images/close.svg" alt="">
+             </button>
+          </div>
+
+        </div>
+    </div>
+
+    <div class="modal" id="thanksModal">
+        <div class="modal__inner">
+          <div class="modal__content">
+           <div class="modal__header">
+               <img class="modal__icon" src="../static/assets/images/tick.svg" alt="">
+                <h4 class="modal__title">Thanks for your request</h4>
+                <div class="moda__text">
+                    <p>We call you back as soon as possible!</p>
+                </div>
+            </div>
+
+
+             <div class="modal__footer">
+                 <h4 class="modal__footer-title">Our contacts</h4>
+                 <address class="modal__contacts">
+                     <p>New York, Street, ZIP code</p>
+                    <p>
+                    Phone: <a href="tel:98437822">+8445342234</a></p>
+                    <p>E-mail<a href="mailto:goshalox@gmail.com">goshalox@gmail.com</a>
+                    </p>
+                 </address>
+             </div>
+
+             <button class="modal__close" type="button">
+                 <img src="../static/assets/images/close.svg" alt="">
+             </button>
+            </div>
+        </div>
+    </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><script src="../static/assets/js/slick.min.js?"></script>
+<script src="../static/assets/js/aos.js?"></script>
+<script src="../static/assets/js/app.js?"></script>
+
+
+
 </body>
 </html>
