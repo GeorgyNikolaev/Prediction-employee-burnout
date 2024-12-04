@@ -13,8 +13,8 @@ $(function() {
     });
 
     $(window).on("resize", function() {
-        $("body").toggleClass('show-nav')
         headerScroll();
+        // $("body").toggleClass('show-nav')
         navToggal.removeClass('active');
         nav.removeClass('show');
     });
