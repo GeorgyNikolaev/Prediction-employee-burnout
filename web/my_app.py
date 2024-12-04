@@ -8,14 +8,11 @@ import numpy as np
 
 port = 5000
 
-# Расчёт пути к родительской директории
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Проверка наличия родительской директории в sys.path
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
-# Безопасный импорт модуля
 SLON_name = 'main_model/main'
 spec_SLON = importlib.util.spec_from_file_location(SLON_name, os.path.join(parent_dir, f"{SLON_name}.py"))
 SLON = importlib.util.module_from_spec(spec_SLON)

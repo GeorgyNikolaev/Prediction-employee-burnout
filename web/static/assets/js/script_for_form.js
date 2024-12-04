@@ -25,7 +25,7 @@ form.addEventListener('submit', async (event) => {
 });
 
 
-fetch('../static/questions.json') // Замените 'questions.json' на путь к вашему файлу
+fetch('../static/questions.json')
   .then(response => response.json())
   .then(questions => {
     const quizContainer = document.getElementById('survey-form'); // ID контейнера для опроса в HTML
