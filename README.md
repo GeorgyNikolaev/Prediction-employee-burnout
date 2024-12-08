@@ -104,7 +104,7 @@ f1-score: 0.998374
 ### Анализ важности признаков (SHAP)
 Библиотека SHAP использовалась для интерпретации модели и определения наиболее важных факторов, влияющих на предсказание выгорания. Этот анализ позволил получить понимание причинно-следственных связей и улучшить точность модели.
 
-Ниже примведены графики для XGBoost модлели.
+Ниже примведены графики для XGBoost модели.
 
 ![shap_1](https://github.com/GeorgyNikolaev/Prediction-employee-burnout/blob/main/analysis/shap_analysis/xgboost_shap.png)
 ![shap_2](https://github.com/GeorgyNikolaev/Prediction-employee-burnout/blob/main/analysis/shap_analysis/xgboost_shap_bar.png)
